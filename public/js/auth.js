@@ -8,9 +8,9 @@
   function refreshAuthUI(data) {
     data = data || {};
     currentLoggedInUser = data.email;
-    var html = data.html || "nothing here";
+    var html = data.html || "";
 
-    $("#content").html(html);
+    if (html) $("#content").html(html);
     $("#persona li").hide();
     if (currentLoggedInUser) {
       $("#loggedin #email").text(currentLoggedInUser);
