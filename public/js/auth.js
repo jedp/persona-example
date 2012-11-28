@@ -2,31 +2,36 @@
   var currentLoggedInUser = null;
 
   function getCSRF() {
-    var csrf = $('#_csrf').val();
-    console.log("csrf is: " + csrf);
-    return csrf;
+    return $('#_csrf').val();
   }
 
-  function refreshAuthUI(email) {
-    currentLoggedInUser = email;
-    $("#header li").hide();
-    if (email) {
-      $("#loggedin #email").text(email);
+  function refreshAuthUI(data) {
+    data = data || {};
+    currentLoggedInUser = data.email;
+    var html = data.html || "nothing here";
+
+    console.log("data: " + JSON.stringify(data));
+    $("#content").html(html);
+    $("#persona li").hide();
+    if (currentLoggedInUser) {
+      $("#loggedin #email").text(currentLoggedInUser);
       $("#loggedin").show();
     } else {
       $("#loggedin #email").text("");
       $("#loggedout").show();
     }
-    $("button").removeAttr('disabled').css('opacity', '1');
+    $("#login").removeAttr('disabled').css('opacity', '1');
   }
 
   // Check the login status
   $.get('/auth/status', function(data) {
+    console.log(JSON.stringify(data));
     navigator.id.watch({
       loggedInUser: currentLoggedInUser,
 
       onlogin: function(assertion) {
-        $("#header li").hide();
+        console.log("onlogin called");
+        $("#persona li").hide();
         $("#loading").text('Ok, hang on while I do some stuff ...').show();
         $.post(
           '/auth/login',
@@ -35,7 +40,7 @@
             try {
               if (status !== 'success') throw data;
               if (data.status !== 'okay') throw data.reason;
-              refreshAuthUI(data.email);
+              refreshAuthUI(data);
             } catch (err) {
               alert(err);
             }
@@ -44,14 +49,17 @@
       },
 
       onlogout: function() {
-        refreshAuthUI(null);
+        console.log("onlogout called");
+        refreshAuthUI();
       },
       onready: function() {
-        refreshAuthUI(data.email);
+        console.log("onready called");
+        refreshAuthUI(data);
       }
     });
 
     $("#login").click(function(evt) {
+      console.log("login button clicked");
       evt.preventDefault();
 
       $("#login").attr('disabled', 'true').css('opacity', 0.3);
@@ -66,6 +74,7 @@
     });
 
     $("#logout").click(function(evt) {
+      console.log("logout button clicked");
       evt.preventDefault();
       navigator.id.logout();
     });
