@@ -34,13 +34,16 @@ exports.logout = function authLogout(req, res) {
  * case, return details of success and failure.
  */
 exports.login = function authLogin(req, res) {
-    verifyAssertion(req.body.assertion, function(err, result) {
+  verifyAssertion(req.body.assertion, function(err, result) {
     if (err) {
       console.error("ERROR: authLogin: " + err.stack);
       res.send({status: "failure", reason: "Internal error"});
     } else {
-      req.session.loggedInUser = result.email;
-      res.send(result);
+      res.render('loggedin', function(err, html) {
+        req.session.loggedInUser = result.email;
+        result.html = html;
+        res.send(result);
+      });
     }
   });
 };
@@ -74,7 +77,6 @@ exports.login = function authLogin(req, res) {
  * do we do this in the client.
  */
 function verifyAssertion(assertion, callback) {
-  console.log("Verifying assertion");
   var body = qs.stringify({
     assertion: assertion,
     audience: process.env['SITE_URL'] || '127.0.0.1'
