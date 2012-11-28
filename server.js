@@ -43,7 +43,6 @@ app.configure(function(){
 // Our own middleware to inject the csrf token into each request
 // as a variable called 'csrf_token'.
 function csrf(req, res, next) {
-  console.dir(req);
   res.locals.csrf_token = req.session._csrf;
   next();
 }
