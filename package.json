@@ -21,7 +21,7 @@
 
     "scripts": {
         "start": "node server.js",
-        "test": "vows test/*_vows.js --spec"
+        "test": "vows tests/*_vows.js --spec"
     },
 
     "engines": {
