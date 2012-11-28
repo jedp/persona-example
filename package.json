@@ -1,0 +1,30 @@
+{
+    "name": "node-persona-example",
+    "version": "0.0.1",
+    "private": true,
+
+    "description": "An Example Site demonstrating Mozilla Persona",
+    "author": "Jed Parsons <jparsons@mozilla.com>",
+    "main": "server.js",
+
+    "dependencies": {
+      "express": "3.0.3",
+      "helmet": "0.0.7",
+      "jade": "0.27.7",
+      "request": "2.12.0"
+    },
+
+    "devDependencies": {
+      "awsbox": "0.3.3",
+      "vows": "0.7.0"
+    },
+
+    "scripts": {
+        "start": "node server.js",
+        "test": "vows test/*_vows.js --spec"
+    },
+
+    "engines": {
+        "node": ">= 0.8.15"
+    }
+}
