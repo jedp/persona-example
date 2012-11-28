@@ -64,10 +64,34 @@ body {
   font-weight: 500;
   font-size: 16px;
   padding: 0px;
+  line-height: 1.2em;
+}
+
+h1 {
+  margin: .5em 0em;
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin: .5em 0em;
+}
+
+h3 {
+  margin: .5em 0em;
 }
 
 a {
   text-decoration: none;
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+code {
+  white-space: pre;
+  font-family: monospace;
 }
 
 #header {
@@ -105,7 +129,7 @@ a {
 
 #content {
   z-index: 0;
-  width: 100%;
+  max-width: 60em;
   padding: 3em 1em;
 }
 

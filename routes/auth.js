@@ -1,5 +1,7 @@
 const
 qs = require('querystring'),
+md = require('node-markdown').Markdown,
+utils = require('../lib/utils'),
 request = require('request'),
 VERIFIER_HOST = 'verifier.login.persona.org',
 VERIFIER_PATH = '/verify';
@@ -21,7 +23,13 @@ exports.status = function authStatus(req, res) {
  */
 exports.logout = function authLogout(req, res) {
   req.session.destroy();
-  res.send({status: "okay"});
+  var content = {
+    md: md,
+    content: utils.getContent('loggedout')
+  };
+  res.render('loggedout', content, function(err, html) {
+    res.send({status: "okay", html: html});
+  });
 };
 
 /**
@@ -39,7 +47,14 @@ exports.login = function authLogin(req, res) {
       console.error("ERROR: authLogin: " + err.stack);
       res.send({status: "failure", reason: "Internal error"});
     } else {
-      res.render('loggedin', function(err, html) {
+      // Render text to explain how this works
+      var content = {
+        md: md,
+        response: JSON.stringify(result, null, 2),
+        assertion: JSON.stringify(utils.unpackAssertion(req.body.assertion), null, 2),
+        content: utils.getContent('loggedin')
+      };
+      res.render('loggedin', content, function(err, html) {
         req.session.loggedInUser = result.email;
         result.html = html;
         res.send(result);

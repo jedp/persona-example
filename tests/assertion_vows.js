@@ -13,31 +13,31 @@ vows.describe('Assertion utilities')
     },
 
     "algorithm": function(contents) {
-      assert(contents.algorithm === "RS128");
+      assert(contents.header.alg === "RS128");
     },
 
     "audience": function(contents) {
-      assert(contents.audience === "http://127.0.0.1:3000");
+      assert(contents.payload.aud === "http://127.0.0.1:3000");
     },
 
     "issuer": function(contents) {
-      assert(contents.issuer === "eyedee.me");
+      assert(contents.claim.iss === "eyedee.me");
     },
 
     "issued_at": function(contents) {
-      assert(contents.issued_at === 1354063867535);
+      assert(contents.claim.iat === 1354063867535);
     },
 
     "expiration": function(contents) {
-      assert(contents.expiration === 1354085467535);
+      assert(contents.claim.exp === 1354085467535);
     },
 
     "principal email": function(contents) {
-      assert(contents.principal_email === "logi@eyedee.me");
+      assert(contents.claim.principal.email === "logi@eyedee.me");
     },
 
     "public key algorithm": function(contents) {
-      assert(contents.pk_algorithm === "DS");
+      assert(contents.claim['public-key'].algorithm === "DS");
     }
   }
 })

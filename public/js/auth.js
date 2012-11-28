@@ -10,7 +10,6 @@
     currentLoggedInUser = data.email;
     var html = data.html || "nothing here";
 
-    console.log("data: " + JSON.stringify(data));
     $("#content").html(html);
     $("#persona li").hide();
     if (currentLoggedInUser) {
@@ -50,7 +49,17 @@
 
       onlogout: function() {
         console.log("onlogout called");
-        refreshAuthUI();
+        $.post(
+          '/auth/logout',
+          {_csrf: getCSRF()},
+          function success(data, status, xhr) {
+            try {
+              refreshAuthUI(data);
+            } catch (err) {
+              alert(err);
+            }
+          }
+        );
       },
       onready: function() {
         console.log("onready called");
