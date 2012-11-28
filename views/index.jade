@@ -3,8 +3,6 @@ html
   head
     title I like pie
     link(rel='stylesheet', href='/css/style.css')
-    script(src='https://login.persona.org/include.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
   body
 
     a(href='https://github.com/jedp/persona-example', id='fork_me')
@@ -27,5 +25,7 @@ html
     #content
       != md(content)
 
-    script(src='/js/auth.js')
+    script(src='https://login.persona.org/include.js', defer)
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', defer)
+    script(src='/js/auth.js', defer)
 
