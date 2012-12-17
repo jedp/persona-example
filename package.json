@@ -11,7 +11,7 @@
       "express": "3.0.3",
       "helmet": "0.0.7",
       "jade": "0.27.7",
-      "markdown-js": "0.0.3",
+      "node-markdown": "0.1.1",
       "request": "2.12.0"
     },
 
