@@ -53,3 +53,12 @@ $("#logoutButton").click(function() { navigator.id.logout() });
 And done.
 
 Click the signin button above to give it a try!
+
+##Troubleshooting
+
+### Error: "Audience mismatch: domain mismatch"
+
+If you get this error, Persona is saying that the audience for the assertion is
+different from the domain your server is running on. Be sure you are running
+your server on `127.0.0.1`, not `localhost`.  
+
